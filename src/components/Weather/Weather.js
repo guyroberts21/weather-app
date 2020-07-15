@@ -11,10 +11,11 @@ export class Weather extends Component {
         <h2 className="location">{this.props.location}</h2>
         <WeatherDate />
         <WeatherDetails
-          getDegrees={this.props.getDegrees}
+          celsius={this.props.celsius}
           mainDesc={this.props.mainDesc}
           temp={this.props.temp}
-          feelslike={this.props.feelslike}
+          min_temp={this.props.min_temp}
+          max_temp={this.props.max_temp}
           windspeed={this.props.windspeed}
         />
       </div>

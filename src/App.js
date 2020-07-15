@@ -8,11 +8,12 @@ export class App extends Component {
   state = {
     query: '',
     weather: {
-      location: 'Sheffield, GB',
-      mainDesc: 'Probably raining',
-      temp: 10,
-      feels_like: 5,
-      windspeed: 15,
+      location: 'City Name',
+      mainDesc: 'Main Description',
+      temp: 273.16,
+      min_temp: 273.16,
+      max_temp: 273.16,
+      windspeed: 0,
     },
     celsius: true,
   };
@@ -35,8 +36,9 @@ export class App extends Component {
           weather: {
             location: data.name + ', ' + data.sys.country,
             mainDesc: data.weather[0].main,
-            temp: this.getDegrees(data.main.temp - 273.16),
-            feels_like: this.getDegrees(data.main.feels_like - 273.16),
+            temp: data.main.temp,
+            min_temp: data.main.temp_min,
+            max_temp: data.main.temp_max,
             windspeed: Math.round(data.wind.speed * 100) / 100,
           },
         });
@@ -45,14 +47,6 @@ export class App extends Component {
       .catch((e) => {
         console.log(e);
       });
-  };
-
-  getDegrees = (query) => {
-    if (this.state.celsius) {
-      return Math.floor(query);
-    } else {
-      return Math.floor(query * (9 / 5) + 32);
-    }
   };
 
   changeDegrees = () => {
@@ -76,11 +70,12 @@ export class App extends Component {
           changeDegrees={this.changeDegrees}
         />
         <Weather
-          getDegrees={this.getDegrees}
+          celsius={this.state.celsius}
           location={this.state.weather.location}
           mainDesc={this.state.weather.mainDesc}
           temp={this.state.weather.temp}
-          feelslike={this.state.weather.feels_like}
+          min_temp={this.state.weather.min_temp}
+          max_temp={this.state.weather.max_temp}
           windspeed={this.state.weather.windspeed}
         />
       </div>
