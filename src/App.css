@@ -78,6 +78,23 @@ button {
   min-height: 32px;
 }
 
+/* Degrees Styling */
+.degrees-container {
+  display: flex;
+  font-size: 2em;
+  position: absolute;
+  left: 0.5em;
+}
+
+.degrees-container p {
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+
+.degree-selected {
+  color: var(--steel-blue);
+}
+
 /* Main container styling */
 .weather-box {
   position: relative;

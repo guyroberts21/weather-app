@@ -11,6 +11,7 @@ export class Weather extends Component {
         <h2 className="location">{this.props.location}</h2>
         <WeatherDate />
         <WeatherDetails
+          getDegrees={this.props.getDegrees}
           mainDesc={this.props.mainDesc}
           temp={this.props.temp}
           feelslike={this.props.feelslike}

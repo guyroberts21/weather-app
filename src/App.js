@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
+import Degrees from './components/Degrees';
 import Weather from './components/Weather/Weather';
 import './App.css';
 
@@ -13,6 +14,7 @@ export class App extends Component {
       feels_like: 5,
       windspeed: 15,
     },
+    celsius: true,
   };
 
   getWeather = async () => {
@@ -33,8 +35,8 @@ export class App extends Component {
           weather: {
             location: data.name + ', ' + data.sys.country,
             mainDesc: data.weather[0].main,
-            temp: Math.floor(data.main.temp - 273.16),
-            feels_like: Math.floor(data.main.feels_like - 273.16),
+            temp: this.getDegrees(data.main.temp - 273.16),
+            feels_like: this.getDegrees(data.main.feels_like - 273.16),
             windspeed: Math.round(data.wind.speed * 100) / 100,
           },
         });
@@ -43,6 +45,20 @@ export class App extends Component {
       .catch((e) => {
         console.log(e);
       });
+  };
+
+  getDegrees = (query) => {
+    if (this.state.celsius) {
+      return Math.floor(query);
+    } else {
+      return Math.floor(query * (9 / 5) + 32);
+    }
+  };
+
+  changeDegrees = () => {
+    this.setState((prevState) => ({
+      celsius: !prevState.celsius,
+    }));
   };
 
   updateQuery = (e) => {
@@ -55,7 +71,12 @@ export class App extends Component {
     return (
       <div>
         <Header updateQuery={this.updateQuery} onSubmit={this.onSubmit} />
+        <Degrees
+          celsius={this.state.celsius}
+          changeDegrees={this.changeDegrees}
+        />
         <Weather
+          getDegrees={this.getDegrees}
           location={this.state.weather.location}
           mainDesc={this.state.weather.mainDesc}
           temp={this.state.weather.temp}
