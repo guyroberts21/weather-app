@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+:root {
+  --lapis-lazuli: hsla(206, 67%, 56%, 1);
+  --steel-blue: hsla(203, 65%, 65%, 1);
+  --timberwolf: hsla(90, 3%, 86%, 1);
+  --indigo-dye: hsla(202, 76%, 36%, 1);
+  --dark-sky-blue: hsla(194, 40%, 84%, 1);
+}
+
+body {
+  background-color: var(--dark-sky-blue);
+  font-family: 'Montserrat', sans-serif;
+}
+
+input[type='text'],
+button {
+  box-sizing: border-box;
+}
+
+/* Header Styling */
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--indigo-dye);
+  height: 15vh;
+  color: var(--timberwolf);
+}
+
+.location-search {
+  background-image: url('./icons/search.svg');
+  background-repeat: no-repeat;
+  background-position: 20px center;
+  background-size: 1.4em;
+  padding: 5px 5px 5px 60px;
+  margin-right: 2em;
+  height: 100%;
+  font-size: 1.1em;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+}
+
+.location-search:focus {
+  outline: none;
+}
+
+.location-search::placeholder {
+  color: #fff;
+}
+
+.change-weather-btn {
+  background-color: transparent;
+  border: 1px solid var(--timberwolf);
+  font-size: 1.25em;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-right: 35px;
+}
+
+.change-weather-btn:hover {
+  color: var(--dark-sky-blue);
+  transition: color 0.1s ease-in-out;
+}
+
+.logo-container {
+  position: relative;
+  width: 100px;
+  padding: 20px;
+}
+
+.page-logo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  min-height: 32px;
+}
+
+/* Main container styling */
+.weather-box {
+  position: relative;
+  font-size: 20px;
+  width: 40%;
+  margin: 100px auto;
+  background-color: rgba(255, 255, 255, 1);
+  color: var(--indigo-dye);
+  box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.3);
+}
+
+.location {
+  text-align: left;
+  font-size: 1.75em;
+  padding: 0.5em;
+}
+
+.current-date {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  color: var(--steel-blue);
+}
+
+.weather-details {
+  position: relative;
+  color: var(--lapis-lazuli);
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+
+.main-desc {
+  font-size: 1.25em;
+  border-bottom: 1px solid var(--indigo-dye);
+}
+
+.temp {
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+  font-size: 1.3em;
+  margin: 0;
+}

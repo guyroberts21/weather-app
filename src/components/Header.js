@@ -7,11 +7,16 @@ export class Header extends Component {
       <div>
         <header className="weather-header">
           <div className="logo-container">
-            <img src={logo} alt="Page logo"></img>
+            <img src={logo} className="page-logo" alt="Page logo"></img>
           </div>
-          <form>
-            <input type="text" className="location-search" />
-            <button className="change-weather-btn">Find</button>
+          <form onSubmit={this.props.onSubmit}>
+            <input
+              type="text"
+              placeholder="Search for city..."
+              className="location-search"
+              onChange={this.props.updateQuery}
+            />
+            <button className="change-weather-btn">Search</button>
           </form>
         </header>
       </div>

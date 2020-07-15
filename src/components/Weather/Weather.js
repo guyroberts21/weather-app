@@ -7,7 +7,7 @@ import WeatherDate from './WeatherDate';
 export class Weather extends Component {
   render() {
     return (
-      <div>
+      <div className="weather-box">
         <h2 className="location">{this.props.location}</h2>
         <WeatherDate />
         <WeatherDetails
