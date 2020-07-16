@@ -18,6 +18,31 @@ export class App extends Component {
     celsius: true,
   };
 
+  componentDidMount = () => {
+    if (!('geolocation' in navigator)) {
+      console.log('Geolocation not suppported.');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      try {
+        const lat = pos.coords.latitude;
+        const long = pos.coords.longitude;
+        const key = '&appid=ce9e9ecad686d81746de565217f800bf';
+        const url = `api.openweathermap.org/data/2.5/weather?`;
+        const actualURL = url + 'lat=' + lat + '&lon=' + long + key;
+
+        const res = await fetch(actualURL, { mode: 'cors' });
+        const json = await res.json();
+        return json;
+      } catch (e) {
+        console.log(e);
+        return;
+      }
+    });
+  };
+
+  getWeatherCoords = (pos) => {};
+
   getWeather = async () => {
     let response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${this.state.query}&appid=038313e6f6dca6e406ebf805a5026847`,
@@ -35,6 +60,7 @@ export class App extends Component {
         this.setState({
           weather: {
             location: data.name + ', ' + data.sys.country,
+            dateOffset: data.timezone,
             mainDesc: data.weather[0].main,
             temp: data.main.temp,
             min_temp: data.main.temp_min,
@@ -61,6 +87,12 @@ export class App extends Component {
     });
   };
 
+  geolocate = () => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      console.log(pos.coords.latitude, pos.coords.longitude);
+    });
+  };
+
   render() {
     return (
       <div>
@@ -72,12 +104,15 @@ export class App extends Component {
         <Weather
           celsius={this.state.celsius}
           location={this.state.weather.location}
+          dateOffset={this.state.weather.dateOffset}
           mainDesc={this.state.weather.mainDesc}
           temp={this.state.weather.temp}
           min_temp={this.state.weather.min_temp}
           max_temp={this.state.weather.max_temp}
           windspeed={this.state.weather.windspeed}
         />
+
+        <button onClick={this.geolocate}>Click me!</button>
       </div>
     );
   }

@@ -9,7 +9,7 @@ export class Weather extends Component {
     return (
       <div className="weather-box">
         <h2 className="location">{this.props.location}</h2>
-        <WeatherDate />
+        <WeatherDate date={this.props.date} />
         <WeatherDetails
           celsius={this.props.celsius}
           mainDesc={this.props.mainDesc}
