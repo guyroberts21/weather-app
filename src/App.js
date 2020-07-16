@@ -23,25 +23,31 @@ export class App extends Component {
       console.log('Geolocation not suppported.');
       return;
     }
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      try {
-        const lat = pos.coords.latitude;
-        const long = pos.coords.longitude;
-        const key = '&appid=ce9e9ecad686d81746de565217f800bf';
-        const url = `api.openweathermap.org/data/2.5/weather?`;
-        const actualURL = url + 'lat=' + lat + '&lon=' + long + key;
-
-        const res = await fetch(actualURL, { mode: 'cors' });
-        const json = await res.json();
-        return json;
-      } catch (e) {
-        console.log(e);
-        return;
-      }
+    navigator.geolocation.getCurrentPosition((pos) => {
+      const lat = pos.coords.latitude;
+      const long = pos.coords.longitude;
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=ce9e9ecad686d81746de565217f800bf`,
+        { mode: 'cors' }
+      )
+        .then((res) => res.json())
+        .then(this.setWeather);
     });
   };
 
-  getWeatherCoords = (pos) => {};
+  setWeather = (data) => {
+    this.setState({
+      weather: {
+        location: data.name + ', ' + data.sys.country,
+        dateOffset: data.timezone,
+        mainDesc: data.weather[0].main,
+        temp: data.main.temp,
+        min_temp: data.main.temp_min,
+        max_temp: data.main.temp_max,
+        windspeed: Math.round(data.wind.speed * 100) / 100,
+      },
+    });
+  };
 
   getWeather = async () => {
     let response = await fetch(
@@ -56,20 +62,7 @@ export class App extends Component {
     e.preventDefault();
 
     this.getWeather()
-      .then((data) => {
-        this.setState({
-          weather: {
-            location: data.name + ', ' + data.sys.country,
-            dateOffset: data.timezone,
-            mainDesc: data.weather[0].main,
-            temp: data.main.temp,
-            min_temp: data.main.temp_min,
-            max_temp: data.main.temp_max,
-            windspeed: Math.round(data.wind.speed * 100) / 100,
-          },
-        });
-        console.log(data);
-      })
+      .then(this.setWeather)
       .catch((e) => {
         console.log(e);
       });
